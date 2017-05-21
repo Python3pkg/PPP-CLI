@@ -25,11 +25,11 @@ def predicate(node):
         label = 'list'
         for item in node.list:
             assert isinstance(item, DotNode), item
-            print('%s [ label = "%s" ];' % (item.name, item.label))
-            print('%s -> %s;' % (name, item.name))
+            print(('%s [ label = "%s" ];' % (item.name, item.label)))
+            print(('%s -> %s;' % (name, item.name)))
     else:
         label = node.type
-        for (attrname, attr) in node._attributes.items():
+        for (attrname, attr) in list(node._attributes.items()):
             if attrname in ('type', 'value_type'):
                 continue
             if not isinstance(attr, (list, tuple)):
@@ -41,15 +41,15 @@ def predicate(node):
                         isinstance(child.original, List) and \
                         len(child.original.list) == 0:
                     continue
-                print('%s [ label = "%s" ];' % (child.name, child.label))
-                print('%s -> %s [ label = "%s" ];' %
-                    (name, child.name, attrname))
+                print(('%s [ label = "%s" ];' % (child.name, child.label)))
+                print(('%s -> %s [ label = "%s" ];' %
+                    (name, child.name, attrname)))
     return DotNode(name, label, node)
 
 
 def print_tree(node):
     node = node.traverse(predicate)
-    print('%s [ label = "%s" ];' % (node.name, node.label))
+    print(('%s [ label = "%s" ];' % (node.name, node.label)))
 
 def print_responses(responses):
     print('digraph G {\n')
